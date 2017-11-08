@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 这里namespace必须是UserDAO接口的路径，不然要运行的时候要报错 “is not known to the MapperRegistry” -->
+<mapper namespace="com.ssm.dao.IUserDao">
+	<!-- CRUD操作 -->
+
+	<!-- <resultMapid="userResult" type="User" > <result column="user_id" property="id"/> 
+		<result column="user_name" property="name"/> <result column="user_birthday" 
+		property="birthday"/> <result column="user_salary" property="salary"/> </resultMap> -->
+
+	<!-- 这里sql结尾不能加分号，否则报“ORA-00911”的错误 -->
+	<!-- 这里的id必须和UserMapper接口中的接口方法名相同，不然运行的时候也要报错 -->
+	<insert id="insertUser" parameterType="com.ssm.model.User"
+		keyProperty="id" useGeneratedKeys="true">
+		insert into user(name, age) values(#{name}, #{age})
+	</insert>
+
+	<delete id="deleteUser" parameterType="int">
+		delete from user where id=#{id}
+	</delete>
+
+	<update id="updateUser" parameterType="User">
+		update user set name=#{name},age=#{age} where id=#{id}
+	</update>
+
+	<select id="getUserById" parameterType="int" resultType="com.ssm.model.User">
+		select * from user where id=#{id}
+	</select>
+
+	<select id="getAllUsers" resultType="com.ssm.model.User">
+		select * from user
+	</select>
+</mapper>
